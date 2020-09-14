@@ -22,34 +22,34 @@ var checkForXWin = function() {
     var array = gameStateString.split('');
     if(array[0] === 'x') {
         if(array[1]  === 'x' && array[2] === 'x') {
-            playerWinMessage();
             gameOver = true;
+            playerWinMessage();
         } else if(array[3]  === 'x' && array[6] === 'x') {
-            playerWinMessage();
             gameOver = true;
+            playerWinMessage();
         } else if(array[4]  === 'x' && array[8] === 'x') {
-            playerWinMessage();
             gameOver = true;
+            playerWinMessage();
         }
     } else if(array[4] === 'x') {
         if(array[3]  === 'x' && array[5] === 'x') {
-            playerWinMessage();
             gameOver = true;
+            playerWinMessage();
         } else if(array[1]  === 'x' && array[7] === 'x') {
-            playerWinMessage();
             gameOver = true;
+            playerWinMessage();
         } else if(array[2]  === 'x' && array[6] === 'x') {
-            playerWinMessage();
             gameOver = true;
+            playerWinMessage();
         }
     } else if(array[5] === 'x') {
         if(array[2]  === 'x' && array[8] === 'x') {
-            playerWinMessage();
             gameOver = true;
+            playerWinMessage();
         }
     } else if(array[6] === 'x' && array[7] === 'x' && array[8] === 'x') {
-        playerWinMessage();
         gameOver = true;
+        playerWinMessage();
     }
 };
 
@@ -90,8 +90,9 @@ var checkForOWin = function() {
             gameOver = true;
         }
     } else if(array[6] === 'o' && array[7] === 'o' && array[8] === 'o') {
-        playerLostMessage();
         gameOver = true;
+        playerLostMessage();
+        
     }
 }
 
@@ -114,7 +115,6 @@ var opponentTurn = function() {
             break;
         }
     }
-    checkForOWin();
 }
 
 var actUponHashParameters = function(urlString) {
@@ -124,7 +124,10 @@ var actUponHashParameters = function(urlString) {
     var value = urlParams.value;
     gameStateString = changeCharInString(gameStateString, changedCell, value);
     checkForXWin();
-    opponentTurn();
+    if(!gameOver) {
+        opponentTurn();
+        checkForOWin();
+    }
     console.log('current gameStateString', gameStateString);
     renderGameBoard();
 }
@@ -133,13 +136,21 @@ window.addEventListener("hashchange", function(hashChangeEvent) {
     actUponHashParameters(hashChangeEvent.newURL);
 });
 
-var renderGameCell = function(i) {
-    cell = `
+var renderGameCell = function(i, array) {
+    if(array[i] === '-') {
+        cell = `
+            |
+            <a href="#?state=${gameStateString}&change_cell=${i}&value=x">
+            ${gameStateString[i]} </a>
+            |
+        `
+    } else {
+        cell = `
         |
-        <a href="#?state=${gameStateString}&change_cell=${i}&value=x">
-        ${gameStateString[i]} </a>
+        ${gameStateString[i]}
         |
     `
+    }
     return cell;
 }
 
@@ -153,22 +164,23 @@ var renderGameOverCell = function(i) {
 }
 
 var renderGameBoard = function() {
+    var array = gameStateString.split('');
     if(!gameOver) {
         gameBoard.innerHTML = `
             <p>
-                ${renderGameCell(0)}
-                ${renderGameCell(1)}
-                ${renderGameCell(2)}
+                ${renderGameCell(0, array)}
+                ${renderGameCell(1, array)}
+                ${renderGameCell(2, array)}
             </p>
             <p>
-                ${renderGameCell(3)}
-                ${renderGameCell(4)}
-                ${renderGameCell(5)}
+                ${renderGameCell(3, array)}
+                ${renderGameCell(4, array)}
+                ${renderGameCell(5, array)}
             </p>
             <p>
-                ${renderGameCell(6)}
-                ${renderGameCell(7)}
-                ${renderGameCell(8)}
+                ${renderGameCell(6, array)}
+                ${renderGameCell(7, array)}
+                ${renderGameCell(8, array)}
             </p>
             `
     } else {
@@ -192,4 +204,4 @@ var renderGameBoard = function() {
     }
 }
 
-actUponHashParameters(window.location.href);
+renderGameBoard();

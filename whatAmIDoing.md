@@ -9,6 +9,6 @@ And splitting it by an empty string gets you an array of one char at a time!
 ## My comments
 [x] - I need to come up with a board, then decide how fancy I'm getting with 'clickable'ness.
 
-[ ] - Make a game over state
+[x] - Make a game over state
 
-[ ] - Make opponent squares non-clickable.
+[x] - Make opponent squares non-clickable.
