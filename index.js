@@ -2,12 +2,100 @@ var gameStateString = '---------';
 var cells = gameStateString.split('');
 var gameBoard = document.getElementById('game');
 var urlParams;
+var winnerMessage = document.getElementById('message');
+var gameOver = false;
 
 var changeCharInString = function(string, position, char) {
     var array = string.split('');
     array[position] = char;
     return array.join('');
 };
+
+var checkForXWin = function() {
+    var array = gameStateString.split('');
+    if(array[0] === 'x') {
+        if(array[1]  === 'x' && array[2] === 'x') {
+            winnerMessage.innerHTML = `
+            <p>Player has won!</p>
+            `
+        } else if(array[3]  === 'x' && array[6] === 'x') {
+            winnerMessage.innerHTML = `
+            <p>Player has won!</p>
+            `
+        } else if(array[4]  === 'x' && array[8] === 'x') {
+            winnerMessage.innerHTML = `
+            <p>Player has won!</p>
+            `
+        }
+    } else if(array[4] === 'x') {
+        if(array[3]  === 'x' && array[5] === 'x') {
+            winnerMessage.innerHTML = `
+            <p>Player has won!</p>
+            `
+        } else if(array[1]  === 'x' && array[7] === 'x') {
+            winnerMessage.innerHTML = `
+            <p>Player has won!</p>
+            `
+        } else if(array[2]  === 'x' && array[6] === 'x') {
+            winnerMessage.innerHTML = `
+            <p>Player has won!</p>
+            `
+        }
+    } else if(array[5] === 'x') {
+        if(array[2]  === 'x' && array[8] === 'x') {
+            winnerMessage.innerHTML = `
+            <p>Player has won!</p>
+            `
+        }
+    } else if(array[6] === 'x' && array[7] === 'x' && array[8] === 'x') {
+        winnerMessage.innerHTML = `
+            <p>Player has won!</p>
+            `
+    }
+};
+
+var checkForOWin = function() {
+    var array = gameStateString.split('');
+    if(array[0] === 'o') {
+        if(array[1]  === 'o' && array[2] === 'o') {
+            winnerMessage.innerHTML = `
+            <p>Player has lost!</p>
+            `
+        } else if(array[3]  === 'o' && array[6] === 'o') {
+            winnerMessage.innerHTML = `
+            <p>Player has lost!</p>
+            `
+        } else if(array[4]  === 'o' && array[8] === 'o') {
+            winnerMessage.innerHTML = `
+            <p>Player has lost!</p>
+            `
+        }
+    } else if(array[4] === 'o') {
+        if(array[3]  === 'o' && array[5] === 'o') {
+            winnerMessage.innerHTML = `
+            <p>Player has lost!</p>
+            `
+        } else if(array[1]  === 'o' && array[7] === 'o') {
+            winnerMessage.innerHTML = `
+            <p>Player has lost!</p>
+            `
+        } else if(array[2]  === 'o' && array[6] === 'o') {
+            winnerMessage.innerHTML = `
+            <p>Player has lost!</p>
+            `
+        }
+    } else if(array[5] === 'o') {
+        if(array[2]  === 'o' && array[8] === 'o') {
+            winnerMessage.innerHTML = `
+            <p>Player has lost!</p>
+            `
+        }
+    } else if(array[6] === 'o' && array[7] === 'o' && array[8] === 'o') {
+        winnerMessage.innerHTML = `
+            <p>Player has lost!</p>
+            `
+    }
+}
 
 var parseUrlHash = function(urlString) {
     var hash = urlString.split('#').pop();
@@ -20,17 +108,15 @@ var parseUrlHash = function(urlString) {
 };
 
 var opponentTurn = function() {
-    console.log('opponentTurn was called');
     var gameArray = gameStateString.split('');
     console.log(gameArray);
     for(var i=8; i>0; i--) {
-        console.log('into the for loop');
         if(gameArray[i] === '-') {
-            console.log('into the if loop');
             gameStateString = changeCharInString(gameStateString, i, 'o');
             break;
         }
     }
+    checkForOWin();
 }
 
 var actUponHashParameters = function(urlString) {
@@ -39,6 +125,7 @@ var actUponHashParameters = function(urlString) {
     var changedCell = parseInt(urlParams.change_cell);
     var value = urlParams.value;
     gameStateString = changeCharInString(gameStateString, changedCell, value);
+    checkForXWin();
     opponentTurn();
     console.log('current gameStateString', gameStateString);
     renderGameBoard();
