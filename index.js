@@ -19,12 +19,28 @@ var parseUrlHash = function(urlString) {
     return params;
 };
 
+var opponentTurn = function() {
+    console.log('opponentTurn was called');
+    var gameArray = gameStateString.split('');
+    console.log(gameArray);
+    for(var i=8; i>0; i--) {
+        console.log('into the for loop');
+        if(gameArray[i] === '-') {
+            console.log('into the if loop');
+            gameStateString = changeCharInString(gameStateString, i, 'o');
+            break;
+        }
+    }
+}
+
 var actUponHashParameters = function(urlString) {
     urlParams = parseUrlHash(urlString);
     console.log('window hash change listener', urlParams);
     var changedCell = parseInt(urlParams.change_cell);
     var value = urlParams.value;
     gameStateString = changeCharInString(gameStateString, changedCell, value);
+    opponentTurn();
+    console.log('current gameStateString', gameStateString);
     renderGameBoard();
 }
 
@@ -35,7 +51,7 @@ window.addEventListener("hashchange", function(hashChangeEvent) {
 var renderGameCell = function(i) {
     cell = `
         |
-        <a href="#?${gameStateString}&change_cell=${i}&value=x">
+        <a href="#?state=${gameStateString}&change_cell=${i}&value=x">
         ${gameStateString[i]} </a>
         |
     `
