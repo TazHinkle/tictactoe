@@ -20,34 +20,34 @@ var playerWinMessage = function() {
 
 var checkForXWin = function() {
     var array = gameStateString.split('');
-    if(array[0] === 'x') {
-        if(array[1]  === 'x' && array[2] === 'x') {
+    if (array[0] === 'x') {
+        if (array[1] === 'x' && array[2] === 'x') {
             gameOver = true;
             playerWinMessage();
-        } else if(array[3]  === 'x' && array[6] === 'x') {
+        } else if (array[3] === 'x' && array[6] === 'x') {
             gameOver = true;
             playerWinMessage();
-        } else if(array[4]  === 'x' && array[8] === 'x') {
-            gameOver = true;
-            playerWinMessage();
-        }
-    } else if(array[4] === 'x') {
-        if(array[3]  === 'x' && array[5] === 'x') {
-            gameOver = true;
-            playerWinMessage();
-        } else if(array[1]  === 'x' && array[7] === 'x') {
-            gameOver = true;
-            playerWinMessage();
-        } else if(array[2]  === 'x' && array[6] === 'x') {
+        } else if (array[4] === 'x' && array[8] === 'x') {
             gameOver = true;
             playerWinMessage();
         }
-    } else if(array[5] === 'x') {
-        if(array[2]  === 'x' && array[8] === 'x') {
+    } else if (array[4] === 'x') {
+        if (array[3] === 'x' && array[5] === 'x') {
+            gameOver = true;
+            playerWinMessage();
+        } else if (array[1] === 'x' && array[7] === 'x') {
+            gameOver = true;
+            playerWinMessage();
+        } else if (array[2] === 'x' && array[6] === 'x') {
             gameOver = true;
             playerWinMessage();
         }
-    } else if(array[6] === 'x' && array[7] === 'x' && array[8] === 'x') {
+    } else if (array[5] === 'x') {
+        if (array[2] === 'x' && array[7] === 'x') {
+            gameOver = true;
+            playerWinMessage();
+        }
+    } else if (array[6] === 'x' && array[7] === 'x' && array[8] === 'x') {
         gameOver = true;
         playerWinMessage();
     }
@@ -62,37 +62,37 @@ var playerLostMessage = function() {
 
 var checkForOWin = function() {
     var array = gameStateString.split('');
-    if(array[0] === 'o') {
-        if(array[1]  === 'o' && array[2] === 'o') {
+    if (array[0] === 'o') {
+        if (array[1] === 'o' && array[2] === 'o') {
             playerLostMessage();
             gameOver = true;
-        } else if(array[3]  === 'o' && array[6] === 'o') {
+        } else if (array[3] === 'o' && array[6] === 'o') {
             playerLostMessage();
             gameOver = true;
-        } else if(array[4]  === 'o' && array[8] === 'o') {
-            playerLostMessage();
-            gameOver = true;
-        }
-    } else if(array[4] === 'o') {
-        if(array[3]  === 'o' && array[5] === 'o') {
-            playerLostMessage();
-            gameOver = true;
-        } else if(array[1]  === 'o' && array[7] === 'o') {
-            playerLostMessage();
-            gameOver = true;
-        } else if(array[2]  === 'o' && array[6] === 'o') {
+        } else if (array[4] === 'o' && array[8] === 'o') {
             playerLostMessage();
             gameOver = true;
         }
-    } else if(array[5] === 'o') {
-        if(array[2]  === 'o' && array[8] === 'o') {
+    } else if (array[4] === 'o') {
+        if (array[3] === 'o' && array[5] === 'o') {
+            playerLostMessage();
+            gameOver = true;
+        } else if (array[1] === 'o' && array[7] === 'o') {
+            playerLostMessage();
+            gameOver = true;
+        } else if (array[2] === 'o' && array[6] === 'o') {
             playerLostMessage();
             gameOver = true;
         }
-    } else if(array[6] === 'o' && array[7] === 'o' && array[8] === 'o') {
+    } else if (array[5] === 'o') {
+        if (array[2] === 'o' && array[7] === 'o') {
+            playerLostMessage();
+            gameOver = true;
+        }
+    } else if (array[6] === 'o' && array[7] === 'o' && array[8] === 'o') {
         gameOver = true;
         playerLostMessage();
-        
+
     }
 }
 
@@ -109,8 +109,8 @@ var parseUrlHash = function(urlString) {
 var opponentTurn = function() {
     var gameArray = gameStateString.split('');
     console.log(gameArray);
-    for(var i=8; i>0; i--) {
-        if(gameArray[i] === '-') {
+    for (var i = 8; i > 0; i--) {
+        if (gameArray[i] === '-') {
             gameStateString = changeCharInString(gameStateString, i, 'o');
             break;
         }
@@ -124,7 +124,7 @@ var actUponHashParameters = function(urlString) {
     var value = urlParams.value;
     gameStateString = changeCharInString(gameStateString, changedCell, value);
     checkForXWin();
-    if(!gameOver) {
+    if (!gameOver) {
         opponentTurn();
         checkForOWin();
     }
@@ -137,7 +137,7 @@ window.addEventListener("hashchange", function(hashChangeEvent) {
 });
 
 var renderGameCell = function(i, array) {
-    if(array[i] === '-') {
+    if (array[i] === '-') {
         cell = `
             |
             <a href="#?state=${gameStateString}&change_cell=${i}&value=x">
@@ -165,7 +165,7 @@ var renderGameOverCell = function(i) {
 
 var renderGameBoard = function() {
     var array = gameStateString.split('');
-    if(!gameOver) {
+    if (!gameOver) {
         gameBoard.innerHTML = `
             <p>
                 ${renderGameCell(0, array)}
