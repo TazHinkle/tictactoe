@@ -31,7 +31,8 @@ var checkForXWin = function() {
             gameOver = true;
             playerWinMessage();
         }
-    } else if (array[4] === 'x') {
+    }
+    if (array[4] === 'x') {
         if (array[3] === 'x' && array[5] === 'x') {
             gameOver = true;
             playerWinMessage();
@@ -42,12 +43,14 @@ var checkForXWin = function() {
             gameOver = true;
             playerWinMessage();
         }
-    } else if (array[5] === 'x') {
-        if (array[2] === 'x' && array[7] === 'x') {
+    }
+    if (array[5] === 'x') {
+        if (array[2] === 'x' && array[8] === 'x') {
             gameOver = true;
             playerWinMessage();
         }
-    } else if (array[6] === 'x' && array[7] === 'x' && array[8] === 'x') {
+    }
+    if (array[6] === 'x' && array[7] === 'x' && array[8] === 'x') {
         gameOver = true;
         playerWinMessage();
     }
@@ -73,7 +76,8 @@ var checkForOWin = function() {
             playerLostMessage();
             gameOver = true;
         }
-    } else if (array[4] === 'o') {
+    }
+    if (array[4] === 'o') {
         if (array[3] === 'o' && array[5] === 'o') {
             playerLostMessage();
             gameOver = true;
@@ -84,12 +88,14 @@ var checkForOWin = function() {
             playerLostMessage();
             gameOver = true;
         }
-    } else if (array[5] === 'o') {
-        if (array[2] === 'o' && array[7] === 'o') {
+    }
+    if (array[5] === 'o') {
+        if (array[2] === 'o' && array[8] === 'o') {
             playerLostMessage();
             gameOver = true;
         }
-    } else if (array[6] === 'o' && array[7] === 'o' && array[8] === 'o') {
+    }
+    if (array[6] === 'o' && array[7] === 'o' && array[8] === 'o') {
         gameOver = true;
         playerLostMessage();
 
